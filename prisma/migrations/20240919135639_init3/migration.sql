@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "UserLife" ALTER COLUMN "tg_id" SET DATA TYPE BIGINT;

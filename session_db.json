@@ -1,0 +1,32 @@
+{
+  "sessions": [
+    {
+      "id": "410826310:410826310",
+      "data": {
+        "__scenes": {},
+        "type": "doneOrEdit"
+      }
+    },
+    {
+      "id": "198828839:198828839",
+      "data": {
+        "__scenes": {},
+        "type": "doneOrEdit"
+      }
+    },
+    {
+      "id": "1831394748:1831394748",
+      "data": {
+        "__scenes": {},
+        "type": "sendingPhotos"
+      }
+    },
+    {
+      "id": "5656164308:5656164308",
+      "data": {
+        "__scenes": {},
+        "type": "doneOrEdit"
+      }
+    }
+  ]
+}
