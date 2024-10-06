@@ -41,19 +41,6 @@ export class LifeService {
       where: { tg_id: tg_id },
     });
     console.log(ctx.session.type);
-    if (userData.photos.length >= 10 && ctx.session.type === 'sendingPhotos') {
-      ctx.session.type = 'sendingText';
-      await ctx.reply('Максимум фото - 10');
-      return;
-    }
-    if (
-      userData.photosEditing.length >= 9 &&
-      ctx.session.type === 'editingPhoto'
-    ) {
-      await ctx.reply('Максимум фото - 10');
-
-      return;
-    }
     if (editing) {
       const updatedUsersData = await this.prisma.userLife.update({
         where: { tg_id },
@@ -221,5 +208,21 @@ export class LifeService {
     }
 
     return updatedUsersData;
+  }
+
+  async setValidPhotos(tg_id: number) {
+    const userData = await this.prisma.userLife.findUnique({
+      where: { tg_id: tg_id },
+    });
+    const arrayOfValidPhotos = [];
+    userData.photos.map((item) => {
+      if (arrayOfValidPhotos.length <= 10) {
+        arrayOfValidPhotos.push(item);
+      }
+    });
+    await this.prisma.userLife.update({
+      where: { tg_id: tg_id },
+      data: { photos: arrayOfValidPhotos },
+    });
   }
 }

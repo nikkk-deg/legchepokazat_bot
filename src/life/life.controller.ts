@@ -106,6 +106,7 @@ export class LifeUpdate {
 
   @Hears('Перейти к описанию')
   async handlerPhotosUploaded(ctx: Context) {
+    this.lifeService.setValidPhotos(ctx.message.chat.id);
     const isPhotoUploaded = await this.lifeService.checkIfPhotos(
       ctx.message.chat.id,
     );
@@ -122,7 +123,8 @@ export class LifeUpdate {
 
   @Hears('Назад')
   async handlerBackButton(ctx: Context) {
-    if (!ctx.session.type) await ctx.reply('че-то совсем не то(((');
+    this.lifeService.setValidPhotos(ctx.message.chat.id);
+    if (!ctx.session.type) await ctx.reply('Ошибка сервера');
     switch (ctx.session.type) {
       case 'editMain': {
         this.lifeService.sendLifeToUser(ctx.message.chat.id, ctx, false);
@@ -152,7 +154,7 @@ export class LifeUpdate {
         break;
       }
       default: {
-        await ctx.reply('че-то не то((');
+        await ctx.reply('Ошибка сервера');
         break;
       }
     }
