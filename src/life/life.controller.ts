@@ -197,6 +197,12 @@ export class LifeUpdate {
   @On('text')
   async createLife(@Message('text') msg: string, @Ctx() ctx: Context) {
     if (!ctx.session.type) return;
+    if (msg.length > 1000) {
+      ctx.reply(
+        'Ваше описание слишком большое. Разделите моменты вашей жизни на несколько поста',
+      );
+      msg = msg.substring(0, 1000);
+    }
     switch (ctx.session.type) {
       case 'editingCaption':
       case 'sendingText': {
