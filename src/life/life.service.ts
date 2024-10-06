@@ -41,8 +41,7 @@ export class LifeService {
       where: { tg_id: tg_id },
     });
     console.log(ctx.session.type);
-    if (userData.photos.length >= 2 && ctx.session.type === 'sendingPhotos') {
-      console.log();
+    if (userData.photos.length >= 10 && ctx.session.type === 'sendingPhotos') {
       ctx.session.type = 'sendingText';
       await ctx.reply('Максимум фото - 10');
       return;
@@ -135,10 +134,12 @@ export class LifeService {
     const lifePhotosArray = [];
 
     userData.photos.map((photo) => {
-      lifePhotosArray.push({
-        type: 'photo',
-        media: { source: `photos/${photo}.jpg` },
-      });
+      if (lifePhotosArray.length < 10) {
+        lifePhotosArray.push({
+          type: 'photo',
+          media: { source: `photos/${photo}.jpg` },
+        });
+      }
     });
 
     if (userData.caption !== null) {
