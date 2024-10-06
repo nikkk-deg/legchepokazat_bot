@@ -11,7 +11,7 @@ export function mainEditButtons() {
     {
       columns: 2,
     },
-  );
+  ).resize(true);
 }
 
 export function doneMenuButtons() {
@@ -24,7 +24,7 @@ export function doneMenuButtons() {
     {
       columns: 2,
     },
-  );
+  ).resize(true);
 }
 
 export function mainMenuButtons(isUserInDraft: boolean) {
@@ -37,14 +37,29 @@ export function mainMenuButtons(isUserInDraft: boolean) {
     {
       columns: 1,
     },
-  );
+  ).resize(true);
 }
 
 export function backButtons() {
   Markup.button.callback('back-buttons', 'menu-4');
   return Markup.keyboard([Markup.button.callback('Назад', 'backButton')], {
     columns: 1,
-  });
+  }).resize(true);
+}
+
+export function continueWithoutCaptionButtons() {
+  Markup.button.callback('continue-without-caption-buttons', 'menu-6');
+  return Markup.keyboard(
+    [
+      Markup.button.callback(
+        'Продолжить без описания',
+        'continueWithoutCaptionButton',
+      ),
+    ],
+    {
+      columns: 1,
+    },
+  ).resize(true);
 }
 
 export function photosHasSended() {
@@ -54,5 +69,5 @@ export function photosHasSended() {
     {
       columns: 1,
     },
-  );
+  ).resize(true);
 }

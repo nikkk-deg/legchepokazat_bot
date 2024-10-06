@@ -16,6 +16,7 @@ import { sendPhoto } from './photo.utils';
 import { v4 as uuidv4 } from 'uuid';
 import {
   backButtons,
+  continueWithoutCaptionButtons,
   doneMenuButtons,
   mainEditButtons,
   mainMenuButtons,
@@ -92,6 +93,17 @@ export class LifeUpdate {
     return;
   }
 
+  @Hears('Продолжить без описания')
+  async handlerContinueWithuotCaption(ctx: Context) {
+    ctx.session.type = 'doneOrEdit';
+    this.lifeService.sendLifeToUser(ctx.message.chat.id, ctx, false);
+    ctx.reply(
+      'Отлично, отправьте кусочек Вашей жизни админу или отредактируйте его',
+      doneMenuButtons(),
+    );
+    return;
+  }
+
   @Hears('Перейти к описанию')
   async handlerPhotosUploaded(ctx: Context) {
     const isPhotoUploaded = await this.lifeService.checkIfPhotos(
@@ -99,7 +111,10 @@ export class LifeUpdate {
     );
     if (isPhotoUploaded) {
       ctx.session.type = 'sendingText';
-      await ctx.reply('Теперь пришлите описание', backButtons());
+      await ctx.reply(
+        'Теперь пришлите описание',
+        continueWithoutCaptionButtons(),
+      );
     } else {
       await ctx.reply('Вы не прислали ещё ни одной фотографии');
     }

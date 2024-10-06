@@ -40,16 +40,18 @@ export class LifeService {
     const userData = await this.prisma.userLife.findUnique({
       where: { tg_id: tg_id },
     });
-    if (userData.photos.length >= 9 && ctx.session.type === 'sendingText') {
+    console.log(ctx.session.type);
+    if (userData.photos.length >= 2 && ctx.session.type === 'sendingPhotos') {
+      console.log();
       ctx.session.type = 'sendingText';
-      await ctx.reply('Максимум фото - 9');
+      await ctx.reply('Максимум фото - 10');
       return;
     }
     if (
       userData.photosEditing.length >= 9 &&
       ctx.session.type === 'editingPhoto'
     ) {
-      await ctx.reply('Максимум фото - 9');
+      await ctx.reply('Максимум фото - 10');
 
       return;
     }
@@ -139,7 +141,9 @@ export class LifeService {
       });
     });
 
-    lifePhotosArray[0].caption = userData.caption;
+    if (userData.caption !== null) {
+      lifePhotosArray[0].caption = userData.caption;
+    }
 
     sendLifeToUser(ctx, lifePhotosArray, toAdmin);
     return;
