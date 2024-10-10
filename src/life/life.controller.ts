@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import {
   Ctx,
   Hears,
@@ -23,6 +23,16 @@ import {
   photosHasSended,
 } from './life.buttons';
 
+fetch('https://api.telegram.org/bot7202681628')
+  .then((json) => console.log('все норм'))
+  .catch(() => {
+    console.log('какая то ошибка ебанная');
+    throw new HttpException(
+      'не удалось подключиться к api телеграм',
+      HttpStatus.BAD_REQUEST,
+    );
+  });
+
 @Controller('life')
 @Update()
 export class LifeUpdate {
@@ -30,6 +40,7 @@ export class LifeUpdate {
     @InjectBot() private readonly bot: Telegraf<Context>,
     private lifeService: LifeService,
   ) {}
+
   @Start()
   async startCommand(ctx: Context) {
     const isInDraft = await this.lifeService.checkIsPhotosOrCaption(
